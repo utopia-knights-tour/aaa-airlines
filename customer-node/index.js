@@ -21,18 +21,18 @@ app.use((req, res, next) => {
 });
 
 
-// app.use((err, req, res, next) => {
-//   if (res.headersSent) {
-//     next(err);
-//   }
-//   if (err.status) {
-//     const errBody = { ...err, message: err.message };
-//     res.status(err.status).json(errBody);
-//   } else {
-//     console.log(err);
-//     res.status(500).json({ message: 'Internal Server Error' });
-//   }
-// });
+app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    next(err);
+  }
+  if (err.status) {
+    const errBody = { ...err, message: err.message };
+    res.status(err.status).json(errBody);
+  } else {
+    console.log(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 if (require.main === module) {
   app.listen(PORT, () => {

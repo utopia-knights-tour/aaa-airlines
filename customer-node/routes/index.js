@@ -1,0 +1,14 @@
+const express = require('express');
+const airports = require('./airports');
+const customer = require('./customer');
+const flights = require('./flights');
+const tickets = require('./tickets');
+
+const router = express.Router();
+
+router.use('/airports', airports);
+router.use('/customer', customer);
+router.use('/flights', flights);
+router.use('/tickets', tickets);
+
+module.exports = router;

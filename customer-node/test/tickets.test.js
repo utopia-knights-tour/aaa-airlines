@@ -14,13 +14,21 @@ describe('tickets', () => {
     await knex('Customer').del();
     return knex.destroy();
   });
-  it('should return a new ticket when given correct input', async () => {
+  it('should return a new ticket and decrement flight when given correct input', async () => {
     const customerResponse = await chai.request(app).post('/customer').send(testCustomer);
     testCustomer = customerResponse.body;
     const testTicket = { flightId: 1, customerId: testCustomer.customerId };
+    let responseFlight = await chai.request(app).get(`/flights/${testTicket.flightId}`);
+    expect(responseFlight.status).to.equal(200);
+    expect(responseFlight.body).to.have.property('seatsAvailable');
+    const { seatsAvailable } = responseFlight.body;
     const response = await chai.request(app).post('/tickets').send(testTicket);
     expect(response.status).to.equal(201);
     expect(response.body).to.have.property('ticketId');
+    responseFlight = await chai.request(app).get(`/flights/${testTicket.flightId}`);
+    expect(responseFlight.status).to.equal(200);
+    expect(responseFlight.body).to.have.property('seatsAvailable');
+    expect(responseFlight.body.seatsAvailable).to.equal(seatsAvailable - 1);
   });
   it('should give a 400 error if required field is missing', async () => {
     const customerResponse = await chai.request(app).post('/customer').send(testCustomer);
@@ -39,7 +47,7 @@ describe('tickets', () => {
     expect(response.status).to.equal(400);
     testTicket = { flightId: 999999, customerId: testCustomer.customerId };
     response = await chai.request(app).post('/tickets').send(testTicket);
-    expect(response.status).to.equal(400);
+    expect(response.status).to.equal(404);
   });
   it('should return a 400 error if customer does not exist or invalid', async () => {
     const testTicket = { flightId: 1, customerId: 99999999 };

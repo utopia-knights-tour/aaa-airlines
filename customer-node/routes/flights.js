@@ -1,5 +1,5 @@
 const express = require('express');
-const { getFlights } = require('../service/flightsService');
+const { getFlights, getFlightById } = require('../service/flightsService');
 
 const router = express.Router();
 
@@ -23,6 +23,15 @@ router.get('/', async (req, res, next) => {
   try {
     const flights = await getFlights(source, destination, date);
     return res.status(200).json(flights);
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const flight = await getFlightById(req.params.id);
+    return res.status(200).json(flight);
   } catch (err) {
     return next(err);
   }

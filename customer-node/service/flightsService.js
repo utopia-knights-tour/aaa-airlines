@@ -1,4 +1,4 @@
-const { findFlights } = require('../data_access/flightda');
+const { findFlights, findFlightById } = require('../data_access/flightda');
 const { airportExists } = require('../data_access/airportda');
 
 const getFlights = async (source, destination, date) => {
@@ -18,4 +18,6 @@ const getFlights = async (source, destination, date) => {
   return findFlights(source, destination, date);
 };
 
-module.exports = { getFlights };
+const getFlightById = (flightId) => findFlightById(flightId);
+
+module.exports = { getFlights, getFlightById };

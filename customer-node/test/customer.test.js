@@ -26,7 +26,9 @@ describe('customers', () => {
   });
 
   it('should respond with 404 if customer does not exist', async () => {
-    const response = await chai.request(app).get('/customer/99999999');
+    let response = await chai.request(app).get('/customer/99999999');
+    expect(response).to.have.status(404);
+    response = await chai.request(app).put('/customer/99999999');
     expect(response).to.have.status(404);
   });
 

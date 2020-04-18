@@ -12,7 +12,12 @@ router.post('/', async (req, res, next) => {
     customerPhone,
   };
 
-  const tooLargeField = Object.keys(customer).find((field) => customer[field].length >= 45);
+  const tooLargeField = Object.keys(customer).find((field) => {
+    if (typeof customer[field] === 'string') {
+      return customer[field].length >= 45;
+    }
+    return false;
+  });
   if (tooLargeField) {
     return res.status(400).json({ message: `${tooLargeField} exceeds limit of 45 characters` });
   }
@@ -40,29 +45,39 @@ router.get('/:customerId', async (req, res, next) => {
 
 router.put('/:customerId', async (req, res, next) => {
   const { customerId: pathId } = req.params;
+  let { customerId } = req.body;
+
+  if (!customerId) {
+    customerId = parseInt(pathId, 10);
+  }
 
   const {
-    customerId, customerName, customerAddress, customerPhone,
+    customerName, customerAddress, customerPhone,
   } = req.body;
 
   const customer = {
-    customerId,
     customerName,
     customerAddress,
     customerPhone,
   };
 
-  const tooLargeField = Object.keys(customer).find((field) => customer[field].length >= 45);
+  const tooLargeField = Object.keys(customer).find((field) => {
+    if (typeof customer[field] === 'string') {
+      return customer[field].length >= 45;
+    }
+    return false;
+  });
   if (tooLargeField) {
     return res.status(400).json({ message: `${tooLargeField} exceeds limit of 45 characters` });
   }
   try {
     if (parseInt(pathId, 10) !== customerId) {
-      return res.status(400).json({ message: 'customer id invalid' });
+      return res.status(400).json({ message: 'customer id in path does not match id in body' });
     }
   } catch (err) {
-    return res.status(400).json({ message: 'customer id invalid' });
+    return res.status(400).json({ message: 'customer id invalid - must be an integer' });
   }
+  customer.customerId = customerId;
   try {
     const result = await updateCustomer(customer);
     return res.status(204).json(result);

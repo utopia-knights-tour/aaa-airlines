@@ -8,9 +8,7 @@ chai.use(chaiHttp);
 describe('flight search', () => {
   it('should return bad request or empty array with 3 char airport not in database', async () => {
     const response = await chai.request(app).get('/flights?source=LHR&destination=LAS&date=2020-01-01');
-    expect(response).to.have.status(200);
-    expect(response.body).to.be.a('array');
-    expect(response.body).to.have.length(0);
+    expect(response).to.have.status(400);
   });
   it('should return correct array if query for past flight ', async () => {
     const response = await chai.request(app).get('/flights?source=LAX&destination=LAS&date=2020-01-01');

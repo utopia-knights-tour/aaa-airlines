@@ -25,7 +25,7 @@ const createTicket = async (ticket) => {
 };
 
 const findTicketById = async (ticketId) => {
-  const ticket = await knex('Ticket').where('ticketId', ticketId);
+  const ticket = await knex('Ticket').where('ticketId', ticketId).first();
   return ticket;
 };
 

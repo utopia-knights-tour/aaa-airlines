@@ -4,6 +4,7 @@
   "description": "customer api",
   "main": "index.js",
   "scripts": {
+    "start": "NODE_ENV=production node index.js",
     "test": "NODE_ENV=test mocha",
     "test-with-coverage": "NODE_ENV=test nyc mocha"
   },

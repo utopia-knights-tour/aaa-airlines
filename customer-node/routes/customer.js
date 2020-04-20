@@ -12,6 +12,12 @@ router.post('/', async (req, res, next) => {
     customerPhone,
   };
 
+  const nonStringField = Object.keys(customer).find((field) => typeof customer[field] !== 'string');
+
+  if (nonStringField) {
+    return res.status(400).json(`${nonStringField} must be a string`);
+  }
+
   const tooLargeField = Object.keys(customer).find((field) => {
     if (typeof customer[field] === 'string') {
       return customer[field].length >= 45;

@@ -1,0 +1,7 @@
+
+node_modules
+test
+npm_debug.log
+*.csv
+.eslintrc.json
+.env

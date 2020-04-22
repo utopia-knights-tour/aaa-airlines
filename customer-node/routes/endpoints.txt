@@ -1,0 +1,13 @@
+GET /customer/airports
+GET /customer/customer/:customerId
+POST /customer/customer
+PUT /customer/customer/:customerId
+GET /customer/flights?
+GET /customer/flights/:flightId
+GET /customer/tickets/:customerId
+POST /customer/tickets
+DELETE /customer/tickets/:ticketId
+
+
+
+

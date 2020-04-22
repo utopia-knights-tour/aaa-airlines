@@ -25,6 +25,8 @@ const addTicket = async (ticket) => {
   return newTicket;
 };
 
+const getTicketsById = (ticketId) => findTicketById(ticketId);
+
 const cancelTicket = async (customerId, ticketId) => {
   const ticket = await findTicketById(ticketId);
   if (!ticket) {
@@ -40,4 +42,6 @@ const cancelTicket = async (customerId, ticketId) => {
   await deleteTicket(ticketId, ticket.flightId);
 };
 
-module.exports = { getTicketsByCustomerId, addTicket, cancelTicket };
+module.exports = {
+  getTicketsByCustomerId, addTicket, cancelTicket, getTicketsById,
+};

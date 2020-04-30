@@ -12,7 +12,7 @@ const PORT = process.env.PORT || '3000';
 const app = express();
 
 app.use(cors());
-app.options('*', cors())
+app.options('*', cors());
 
 app.use(express.json());
 app.use(

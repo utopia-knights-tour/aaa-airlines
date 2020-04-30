@@ -19,4 +19,6 @@ const updateCustomer = async (customer) => {
   return updateCustomerData(customer);
 };
 
-module.exports = { getCustomer, addCustomer, updateCustomer, getCustomerByUserId };
+module.exports = {
+  getCustomer, addCustomer, updateCustomer, getCustomerByUserId,
+};

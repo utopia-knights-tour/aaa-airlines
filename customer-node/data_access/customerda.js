@@ -14,5 +14,5 @@ const createCustomer = async (customer) => {
 const updateCustomerData = (customer) => knex('Customer').update(customer).where('customerId', customer.customerId);
 
 module.exports = {
-  findCustomer, createCustomer, updateCustomerData, findCustomerByUserId
+  findCustomer, createCustomer, updateCustomerData, findCustomerByUserId,
 };

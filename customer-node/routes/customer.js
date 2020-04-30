@@ -1,5 +1,7 @@
 const express = require('express');
-const { addCustomer, updateCustomer, getCustomer, getCustomerByUserId } = require('../service/customerService');
+const {
+  addCustomer, updateCustomer, getCustomer, getCustomerByUserId,
+} = require('../service/customerService');
 
 const router = express.Router();
 
@@ -45,13 +47,10 @@ router.get('/', async (req, res, next) => {
       return res.status(404).json({ message: 'Customer Not Found' });
     }
     return res.status(200).json(customer);
-
   } catch (err) {
     return next(err);
   }
-
-
-})
+});
 
 router.get('/:customerId', async (req, res, next) => {
   const { customerId } = req.params;

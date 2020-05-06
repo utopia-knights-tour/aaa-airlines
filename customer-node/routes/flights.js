@@ -4,14 +4,14 @@ const { getFlights, getFlightById } = require('../service/flightsService');
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
-  const requiredFields = ['source', 'destination', 'date'];
+  const requiredFields = ['originCode', 'destinationCode', 'departureDate'];
   const missingField = requiredFields.find((field) => !(field in req.query));
 
   if (missingField) {
     return res.status(400).json({ message: `${missingField} is required` });
   }
 
-  const { source, destination, date } = req.query;
+  const { originCode: source, destinationCode: destination, departureDate: date } = req.query;
 
   const datere = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/;
   if (!date.match(datere)) {

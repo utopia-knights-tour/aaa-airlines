@@ -1,6 +1,10 @@
-const { findCustomer, createCustomer, updateCustomerData } = require('../data_access/customerda');
+const {
+  findCustomer, createCustomer, updateCustomerData, findCustomerByUserId,
+} = require('../data_access/customerda');
 
 const getCustomer = (customerId) => findCustomer(customerId);
+
+const getCustomerByUserId = (userId) => findCustomerByUserId(userId);
 
 const addCustomer = (customer) => createCustomer(customer);
 
@@ -15,4 +19,6 @@ const updateCustomer = async (customer) => {
   return updateCustomerData(customer);
 };
 
-module.exports = { getCustomer, addCustomer, updateCustomer };
+module.exports = {
+  getCustomer, addCustomer, updateCustomer, getCustomerByUserId,
+};

@@ -1,0 +1,149 @@
+openapi: 3.0.0
+info:
+  title: Online Customer API
+  description:  Online Customer API for Airline Service
+  version: 0.0.1
+paths:
+  /airports:
+    get:
+      summary: get all airports
+      responses: 
+        200:
+          descripton: success
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/airport"
+  /flights:
+    get:
+      summary: get 
+      parameters: 
+        - in: query
+          name: origin
+          schema:
+            type: string
+            minLength: 3
+            maxLength: 3
+          description: 3 letter origin airport code
+        - in: query
+          name: destination
+          schema:
+            type: string
+            minLength: 3
+            maxLength: 3
+            description: 3 letter destination airport code
+        - in: query
+          name: date
+          schema:
+            type: string
+            format: date
+          description: date of flights
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: "#/components/schemas/flight"
+  /tickets/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ticket id to retrieve
+      responses:
+        200:
+          description: success
+          schema:
+            $ref: ticket
+        404:
+          description: not found
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: id of ticket to delete
+      responses:
+        204:
+          description: no content  
+    /tickets:
+      post:
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ticket"
+      summary: create a ticket
+      responses:
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ticket"
+        400:
+          description: bad request
+components:
+  schemas:
+    flight:
+      type: object
+      properties:
+        flightId:
+          type: integer
+        source:
+          type: string
+          minLength: 3
+          maxLength: 3
+        destination:
+          type: string
+          minLength: 3
+          maxLength: 3
+        departureTime:
+          type: string
+          format: date
+        arrivalTime:
+          type: string
+          format: date
+        seatsAvailable:
+          type: integer
+    airport:  
+      type: object
+      properties:
+        airportCode:
+          type: string
+          minLength: 3
+          maxLength: 3
+        airportName:
+          type: string
+          maxLength: 45
+        airportLocation:
+          type: string
+          maxLength: 45
+    ticket:
+      type: object
+      properties:
+        ticketId:
+          type: integer
+        customerId:
+          type: integer
+        agencyId:
+          type: integer
+        flightId:
+          type: integer
+        canceled: 
+          type: boolean
+    
+    
+        
+            
+              

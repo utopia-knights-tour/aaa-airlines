@@ -62,7 +62,7 @@ describe('tickets', () => {
     testCustomer = customerResponse.body;
     const testTicket = { flightId: 1, customerId: testCustomer.customerId };
     await chai.request(app).post('/tickets').send(testTicket);
-    const response = await chai.request(app).get(`/tickets/${testCustomer.customerId}`);
+    const response = await chai.request(app).get(`/tickets?customerId=${testCustomer.customerId}`);
     expect(response.status).to.equal(200);
     expect(response.body).to.be.a('array');
     expect(response.body).to.have.length(1);

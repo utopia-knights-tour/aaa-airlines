@@ -16,7 +16,7 @@ app.options('*', cors());
 
 app.use(express.json());
 app.use(
-  morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
+  morgan(process.env.NODE_ENV === 'production' ? 'dev' : 'dev', {
     skip: () => process.env.NODE_ENV === 'test',
   }),
 );
